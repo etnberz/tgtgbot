@@ -11,12 +11,12 @@ NOW = datetime.datetime(2023, 5, 18, 18)
 
 def mock_tgtg_bot(mocker, monkeypatch):
     mocker.patch(
-        "tgtg_bot.tgtg_bot.tgtg_bot.TgtgClient",
+        "tgtgbot.tgtg_bot.tgtg_bot.TgtgClient",
         return_value=TestClient(),
     )
 
     mocker.patch(
-        "tgtg_bot.tgtg_bot.tgtg_bot.dt.timedelta", return_value=datetime.timedelta(seconds=1)
+        "tgtgbot.tgtg_bot.tgtg_bot.dt.timedelta", return_value=datetime.timedelta(seconds=1)
     )
 
     datetime_mock = MagicMock(wraps=datetime.datetime)
@@ -50,7 +50,7 @@ def test_tgtgbot_send_message(mocker, monkeypatch):
 
     mock_tgtg_bot(mocker=mocker, monkeypatch=monkeypatch)
 
-    mock_requests = mocker.patch("tgtg_bot.tgtg_bot.tgtg_bot.requests.get")
+    mock_requests = mocker.patch("tgtgbot.tgtg_bot.tgtg_bot.requests.get")
 
     TgtgBot(message="scoobydoooo").send_message()
 
@@ -99,16 +99,16 @@ def test_tgtgbot_run(mocker, monkeypatch, nb_loops, ends_with_item_availability)
     monkeypatch.setattr("datetime.datetime.now", datetime_now_mock)
 
     mock_is_item_available = mocker.patch(
-        "tgtg_bot.tgtg_bot.tgtg_bot.TgtgBot.is_item_available",
+        "tgtgbot.tgtg_bot.tgtg_bot.TgtgBot.is_item_available",
         side_effect=item_availabilities,
     )
 
     mock_send_message = mocker.patch(
-        "tgtg_bot.tgtg_bot.tgtg_bot.TgtgBot.send_message",
+        "tgtgbot.tgtg_bot.tgtg_bot.TgtgBot.send_message",
     )
 
     mock_time_sleep = mocker.patch(
-        "tgtg_bot.tgtg_bot.tgtg_bot.time.sleep",
+        "tgtgbot.tgtg_bot.tgtg_bot.time.sleep",
     )
 
     bot.run()

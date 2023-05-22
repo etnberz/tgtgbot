@@ -1,0 +1,2 @@
+include tgtgbot/py.typed
+include tgtgbot/config/log_config.json

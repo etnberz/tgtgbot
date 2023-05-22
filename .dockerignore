@@ -1,0 +1,66 @@
+# Docker files
+.dockerignore
+Dockerfile
+
+# Byte-compiled / optimized / DLL files
+__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+
+# Installer logsv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Logs
+*.log
+log
+logs
+
+# Tools
+.mypy_cache
+.cache
+.tools-cfg
+.tox
+tox.ini
+.idea
+
+# Tests
+.pytest_cache
+tests
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+*,cover
+htmlcov
+
+# Distribution / packaging
+build
+.Python
+
+# virtualenv
+env
+venv
+
+*.egg
+*.egg-info
+
+# git
+.pre-commit-config.yaml
+.gitlab
+.gitlab-ci.yml
+.gitattributes
+.gitignore
+.git
+
+# lfs
+.lfsconfig
+
+# repo/doc
+CHANGELOG.md
+
+htmlcov
+
+demo

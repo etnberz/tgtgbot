@@ -1,0 +1,90 @@
+name: Tgtg Bot CI Pipeline
+
+on:
+  - push
+
+jobs:
+  linters:
+    runs-on: ${{matrix.platform}}
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install .[tests]
+        python -m pip install tox
+    - name: flake8
+      run: tox -e flake8
+    - name: mypy
+      run: tox -e mypy
+    - name: black
+      run: tox -e black
+    - name: isort
+      run: tox -e isort
+    - name: pylint
+      run: tox -e pylint
+    - name: bandit
+      run: tox -e bandit
+
+  unit-tests:
+    needs: [linters]
+    runs-on: ${{matrix.platform}}
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: [3.9]
+        python-version-tox: [39]
+
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install .[tests]
+          python -m pip install tox
+      - name: py${{ matrix.python-version-tox }}-unit-test
+        run: tox -e py${{ matrix.python-version-tox }}-unit
+
+  functional-tests:
+    needs: [linters]
+    runs-on: ${{matrix.platform}}
+    strategy:
+      matrix:
+        platform: [ubuntu-latest]
+        python-version: [3.9]
+        python-version-tox: [39]
+
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python -m pip install .[tests]
+          python -m pip install tox
+      - name: py${{ matrix.python-version-tox }}-functional-test
+        run: tox -e py${{ matrix.python-version-tox }}-functional
+
+  docker-image-build:
+    needs: [ unit-tests, functional-tests ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

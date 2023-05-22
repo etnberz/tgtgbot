@@ -1,0 +1,15 @@
+[run]
+branch = true
+
+[report]
+skip_covered = False
+show_missing = True
+exclude_lines =
+	\#\s*pragma: no cover
+	^if __name__ == ["]__main__["]:$
+
+[paths]
+source =
+	cookie-cutter-python-etnberz/
+	*/lib/*/site-packages/cookie-cutter-python-etnberz
+	.tox/*/lib/*/site-packages/cookie-cutter-python-etnberz

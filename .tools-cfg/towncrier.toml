@@ -1,0 +1,30 @@
+[tool.towncrier]
+filename = "CHANGELOG.md"
+directory = ".changelog/"
+version= "0.1.0"
+start_string = "[comment]: <> (towncrier release notes start)\n"
+issue_format = "[PR{issue}](https://github.com/etnberz/my-project/pull/{issue})"  # // editorconfig-checker-disable-line
+underlines = ["", ""]
+template = ".towncrier.template.md"
+title_format = "## [{version}] {project_date}\n"
+
+[[tool.towncrier.type]]
+directory = "fix"
+name = "Fixed"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "add"
+name = "Added"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "cha"
+name = "Changed"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "rem"
+name = "Removed"
+showcontent = true
+[[tool.towncrier.type]]
+directory = "int"
+name = "Internals"
+showcontent = true

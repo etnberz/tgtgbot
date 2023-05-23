@@ -60,11 +60,17 @@ class TgtgBot:  # pylint:disable=unused-variable
         while refresh:
             now = dt.datetime.now()
             try:
-                frichti_available = self.is_item_available()
-            except requests.exceptions.ReadTimeout:
-                frichti_available = False
+                item_available = self.is_item_available()
+            except requests.exceptions.Timeout:
+                item_available = False
+            except requests.exceptions.HTTPError:
+                item_available = False
+            except requests.exceptions.ConnectionError:
+                item_available = False
+            except requests.exceptions.RequestException:
+                item_available = False
 
-            if frichti_available:
+            if item_available:
                 self.send_message()
                 refresh = False
             else:

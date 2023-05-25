@@ -61,13 +61,12 @@ class TgtgBot:  # pylint:disable=unused-variable
             now = dt.datetime.now()
             try:
                 item_available = self.is_item_available()
-            except requests.exceptions.Timeout:
-                item_available = False
-            except requests.exceptions.HTTPError:
-                item_available = False
-            except requests.exceptions.ConnectionError:
-                item_available = False
-            except requests.exceptions.RequestException:
+            except (
+                requests.exceptions.Timeout,
+                requests.exceptions.HTTPError,
+                requests.exceptions.ConnectionError,
+                requests.exceptions.RequestException,
+            ):
                 item_available = False
 
             if item_available:

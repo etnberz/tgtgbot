@@ -75,4 +75,4 @@ class TgtgBot:  # pylint:disable=unused-variable
             else:
                 refresh = now < self.end_time
 
-            time.sleep(SystemRandom().randrange(5, 25))
+            time.sleep(SystemRandom().randrange(30, 60))
